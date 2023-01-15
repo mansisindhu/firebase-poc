@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import { auth, logOut, signIn } from "./service/firebase";
 
 function App() {
