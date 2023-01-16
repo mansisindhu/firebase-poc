@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "./redux/action";
+import { fetchData, getUser } from "./redux/action";
 
 import { auth, signIn, signOut } from "./service/firebase";
 
 function App() {
-  const user = useSelector((state) => state.user);
+  const { user, data } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,6 +17,9 @@ function App() {
         })
       );
     });
+
+    dispatch(fetchData());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -31,6 +34,12 @@ function App() {
           Sign in with google
         </button>
       )}
+
+      {data.map((el) => (
+        <div>
+          {el.name} <button>Wishlist</button>
+        </div>
+      ))}
     </div>
   );
 }

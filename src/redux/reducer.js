@@ -1,4 +1,4 @@
-import { GET_USER } from "./actionTypes";
+import { GET_DATA, GET_USER } from "./actionTypes";
 
 const initialState = {
   user: null,
@@ -11,6 +11,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+
+    case GET_DATA:
+      return {
+        ...state,
+        data: action.payload,
       };
 
     default:
