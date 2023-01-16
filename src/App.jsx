@@ -29,7 +29,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAddToWishlist = () => (docId) => {
+  const handleAddToWishlist = (docId) => () => {
     dispatch(addToWishlist(user?.id, docId));
   };
 
