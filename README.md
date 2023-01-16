@@ -1,8 +1,10 @@
 # firebase-poc
 
-### Add data to firestore, just run a forloop
+### Add data to firestore, run a forloop on data array
 
 ```
+import data from "./data.json";
+
 for (let i = 0; i < data.length; i++) {
   database
     .collection("products")
