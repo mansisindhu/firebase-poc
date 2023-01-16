@@ -1,8 +1,9 @@
-import { GET_DATA, GET_USER } from "./actionTypes";
+import { GET_DATA, GET_USER, GET_WISHLIST } from "./actionTypes";
 
 const initialState = {
   user: null,
   data: [],
+  wishlist: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -17,6 +18,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+      };
+
+    case GET_WISHLIST:
+      return {
+        ...state,
+        wishlist: action.payload,
       };
 
     default:

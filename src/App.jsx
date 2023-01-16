@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData, getUser } from "./redux/action";
+import {
+  fetchData,
+  fetchWishlist,
+  getUser,
+  addToWishlist,
+} from "./redux/action";
 
 import { auth, signIn, signOut } from "./service/firebase";
 
@@ -14,13 +19,19 @@ function App() {
         getUser({
           displayName: user.displayName,
           email: user.email,
+          id: user.uid,
         })
       );
     });
 
     dispatch(fetchData());
+    dispatch(fetchWishlist());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleAddToWishlist = () => (docId) => {
+    dispatch(addToWishlist(user?.id, docId));
+  };
 
   return (
     <div>
@@ -36,8 +47,9 @@ function App() {
       )}
 
       {data.map((el) => (
-        <div>
-          {el.name} <button>Wishlist</button>
+        <div key={el.id}>
+          {el.name}{" "}
+          <button onClick={handleAddToWishlist(el.docId)}>Wishlist</button>
         </div>
       ))}
     </div>
