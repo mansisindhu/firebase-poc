@@ -1,7 +1,11 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
-// Your web app's Firebase configuration
+import store from "../redux/store";
+import { getUser } from "../redux/action";
+
+// Firebase configuration (should be in .env)
 const firebaseConfig = {
   apiKey: "AIzaSyAe5v6h2MssorsljBCPiZBD7-QLbEx41cQ",
   authDomain: "learn-firebase-7610f.firebaseapp.com",
@@ -12,13 +16,30 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+// Google Auth Provider
+const provider = new firebase.auth.GoogleAuthProvider();
 
-export const signIn = () => signInWithPopup(auth, provider);
+export const signIn = async () => {
+  try {
+    const result = await firebase.auth().signInWithPopup(provider);
+    store.dispatch(
+      getUser({
+        displayName: result?.user?.displayName,
+        email: result?.user?.email,
+      })
+    );
+  } catch (error) {
+    store.dispatch(getUser(null));
+  }
+};
 
-export const logOut = () => {
-  auth.signOut();
+export const signOut = async () => {
+  try {
+    await firebase.auth().signOut();
+    store.dispatch(getUser(null));
+  } catch (error) {
+    store.dispatch(getUser(null));
+  }
 };

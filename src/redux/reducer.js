@@ -1,12 +1,17 @@
+import { GET_USER } from "./actionTypes";
+
 const initialState = {
-  user: {},
+  user: null,
   data: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "ANY":
-      return state;
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
 
     default:
       return state;

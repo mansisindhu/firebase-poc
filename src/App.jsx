@@ -1,28 +1,16 @@
-import { useEffect, useState } from "react";
-import { auth, logOut, signIn } from "./service/firebase";
+import { useSelector } from "react-redux";
+
+import { signIn, signOut } from "./service/firebase";
 
 function App() {
-  const [user, setUser] = useState({
-    displayName: "",
-    email: "",
-  });
-
-  useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      const { displayName = "", email = "" } = user;
-      setUser({
-        displayName,
-        email,
-      });
-    });
-  }, []);
+  const user = useSelector((state) => state.user);
 
   return (
     <div>
-      {user.email ? (
+      {user ? (
         <div>
           <p>{user.displayName}</p>
-          <button onClick={logOut}>Logout</button>
+          <button onClick={signOut}>Logout</button>
         </div>
       ) : (
         <button className="button" onClick={signIn}>

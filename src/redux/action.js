@@ -1,4 +1,10 @@
-const GET_USER = "GET_USER";
-const GET_DATA = "GET_DATA";
+import { GET_USER } from "./actionTypes";
 
-export { GET_DATA, GET_USER };
+const getUser = (data) => {
+  return {
+    type: GET_USER,
+    payload: data,
+  };
+};
+
+export { getUser };
