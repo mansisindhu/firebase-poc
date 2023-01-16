@@ -29,8 +29,16 @@ export const signIn = async () => {
       getUser({
         displayName: result?.user?.displayName,
         email: result?.user?.email,
+        id: result?.user?.uid,
       })
     );
+
+    // create wishlist doc for new user
+    if (result.additionalUserInfo.isNewUser) {
+      await database.collection("wishlists").doc(result?.user?.uid).set({
+        productIds: [],
+      });
+    }
   } catch (error) {
     store.dispatch(getUser(null));
   }
@@ -49,3 +57,4 @@ export const signOut = async () => {
 const database = firebase.firestore();
 
 export { database, auth };
+export default firebase;
