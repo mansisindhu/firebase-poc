@@ -20,10 +20,11 @@ firebase.initializeApp(firebaseConfig);
 
 // Google Auth Provider
 const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
 
 export const signIn = async () => {
   try {
-    const result = await firebase.auth().signInWithPopup(provider);
+    const result = await auth.signInWithPopup(provider);
     store.dispatch(
       getUser({
         displayName: result?.user?.displayName,
@@ -37,9 +38,14 @@ export const signIn = async () => {
 
 export const signOut = async () => {
   try {
-    await firebase.auth().signOut();
+    await auth.signOut();
     store.dispatch(getUser(null));
   } catch (error) {
     store.dispatch(getUser(null));
   }
 };
+
+// Db connection
+const database = firebase.firestore();
+
+export { database, auth };
