@@ -3,7 +3,7 @@ import { GET_DATA, GET_USER, GET_WISHLIST } from "./actionTypes";
 const initialState = {
   user: null,
   data: [],
-  wishlist: [],
+  wishlist: {},
 };
 
 const rootReducer = (state = initialState, action) => {

@@ -22,10 +22,10 @@ function App() {
           id: user.uid,
         })
       );
+      dispatch(fetchWishlist(user?.uid));
     });
 
     dispatch(fetchData());
-    dispatch(fetchWishlist());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -37,7 +37,8 @@ const fetchWishlist = (userId) => async (dispatch) => {
     const wishlist = (
       await database.collection("wishlists").doc(userId).get()
     ).data();
-    dispatch(getWishlist(wishlist));
+
+    dispatch(getWishlist(wishlist || {}));
   } catch (err) {
     dispatch(getWishlist([]));
   }
@@ -59,9 +60,9 @@ const addToWishlist = (wishlistDocId, newProductId) => async (dispatch) => {
         productIds: firebase.firestore.FieldValue.arrayUnion(newProductId),
       });
 
-    dispatch(fetchWishlist());
+    dispatch(fetchWishlist(wishlistDocId));
   } catch (err) {
-    dispatch(fetchWishlist());
+    dispatch(fetchWishlist(wishlistDocId));
   }
 };
 
